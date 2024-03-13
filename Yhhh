@@ -1,0 +1,32 @@
+pipelineJobNames = ['Job1', 'Job2', 'Job3']
+
+pipelineJobNames.each { jobName ->
+    pipelineJob(jobName) {
+        definition {
+            cps {
+                script('''
+                    pipeline {
+                        agent any
+                        stages {
+                            stage('Build') {
+                                steps {
+                                    echo "Building ${jobName}"
+                                }
+                            }
+                            stage('Test') {
+                                steps {
+                                    echo "Testing ${jobName}"
+                                }
+                            }
+                            stage('Deploy') {
+                                steps {
+                                    echo "Deploying ${jobName}"
+                                }
+                            }
+                        }
+                    }
+                ''')
+            }
+        }
+    }
+}
